@@ -1,0 +1,65 @@
+
+{% extends "base.html" %}
+
+{% block titulo %}Devoluções | Biblioteca{% endblock %}
+{% block cabecalho %}Registro de Devoluções{% endblock %}
+
+{% block conteudo %}
+
+<section class="painel">
+    <h3>Empréstimos aguardando devolução</h3>
+
+    <div class="tabela-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Livro</th>
+                    <th>Usuário</th>
+                    <th>Data do empréstimo</th>
+                    <th>Devolução prevista</th>
+                    <th>Situação</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for emprestimo in emprestimos %}
+                <tr>
+                    <td>{{ emprestimo.livro.titulo }}</td>
+                    <td>{{ emprestimo.usuario.nome }}</td>
+                    <td>{{ emprestimo.data_emprestimo }}</td>
+                    <td>{{ emprestimo.data_prevista_devolucao }}</td>
+
+                    <td>
+                        {% if emprestimo.data_prevista_devolucao < hoje %}
+                            <span class="status atrasado">Atrasado</span>
+                        {% else %}
+                            <span class="status ativo">No prazo</span>
+                        {% endif %}
+                    </td>
+
+                    <td>
+                        <form
+                            action="{{ url_for('devolucoes.registrar_devolucao', id=emprestimo.id) }}"
+                            method="POST">
+
+                            <button type="submit" class="botao">
+                                Registrar devolução
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+
+                {% else %}
+                <tr>
+                    <td colspan="6" class="vazio">
+                        Não existem empréstimos aguardando devolução.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,419 @@
+
+/* ========================================
+   1. CONFIGURAÇÕES GERAIS
+======================================== */
+
+:root {
+    --cor-principal: #245b80;
+    --cor-principal-hover: #194565;
+    --cor-fundo: #f3f6f9;
+    --cor-superficie: #ffffff;
+    --cor-texto: #263445;
+    --cor-texto-secundario: #68778a;
+    --cor-borda: #dce3eb;
+    --cor-sucesso: #18794e;
+    --cor-sucesso-fundo: #e3f5eb;
+    --cor-erro: #b42318;
+    --cor-erro-fundo: #feeceb;
+    --sombra: 0 3px 12px rgba(28, 45, 64, 0.06);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    line-height: 1.5;
+}
+
+a {
+    color: var(--cor-principal);
+    text-decoration: none;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* ========================================
+   2. MENU LATERAL
+======================================== */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 240px;
+    height: 100vh;
+    padding: 28px 18px;
+    background: var(--cor-principal);
+    color: white;
+}
+
+.logo {
+    margin: 0 0 35px;
+    font-size: 25px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu a {
+    padding: 12px 14px;
+    color: white;
+    border-radius: 7px;
+    transition: background 0.2s;
+}
+
+.menu a:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* ========================================
+   3. CONTEÚDO PRINCIPAL
+======================================== */
+
+.conteudo {
+    margin-left: 240px;
+    padding: 30px;
+    min-height: 100vh;
+}
+
+.cabecalho {
+    margin-bottom: 28px;
+}
+
+.cabecalho h2 {
+    margin: 0 0 5px;
+    font-size: 28px;
+}
+
+.cabecalho p,
+.boas-vindas p {
+    margin: 0;
+    color: var(--cor-texto-secundario);
+}
+
+/* ========================================
+   4. PÁGINA INICIAL E CARTÕES
+======================================== */
+
+.boas-vindas {
+    margin-bottom: 24px;
+}
+
+.boas-vindas h2 {
+    margin-bottom: 8px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.card {
+    display: block;
+    padding: 24px;
+    color: var(--cor-texto);
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(28, 45, 64, 0.1);
+}
+
+.card-icone {
+    font-size: 30px;
+}
+
+.card h3 {
+    margin: 15px 0 8px;
+}
+
+.card p {
+    margin: 0;
+    color: var(--cor-texto-secundario);
+}
+
+/* ========================================
+   5. PAINÉIS E FORMULÁRIOS
+======================================== */
+
+.painel {
+    margin-bottom: 25px;
+    padding: 24px;
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    box-shadow: var(--sombra);
+}
+
+.painel h3 {
+    margin: 0 0 22px;
+    font-size: 20px;
+}
+
+.formulario {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.campo label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.campo input,
+.campo select,
+.busca input {
+    width: 100%;
+    min-width: 0;
+    padding: 11px 12px;
+    color: var(--cor-texto);
+    background: white;
+    border: 1px solid var(--cor-borda);
+    border-radius: 7px;
+    outline: none;
+}
+
+.campo input:focus,
+.campo select:focus,
+.busca input:focus {
+    border-color: var(--cor-principal);
+    box-shadow: 0 0 0 3px rgba(36, 91, 128, 0.12);
+}
+
+.formulario > .botao {
+    justify-self: start;
+    align-self: end;
+}
+
+/* ========================================
+   6. BOTÕES
+======================================== */
+
+.botao,
+.botao-excluir {
+    display: inline-block;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 7px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.botao {
+    color: white;
+    background: var(--cor-principal);
+}
+
+.botao:hover {
+    background: var(--cor-principal-hover);
+}
+
+.botao-excluir {
+    color: var(--cor-erro);
+    background: var(--cor-erro-fundo);
+}
+
+.botao-excluir:hover {
+    background: #fbd5d2;
+}
+
+.link-acao {
+    display: inline-block;
+    margin-right: 8px;
+    font-weight: 600;
+}
+
+.form-inline {
+    display: inline;
+}
+
+/* ========================================
+   7. PESQUISA
+======================================== */
+
+.busca {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.busca input {
+    flex: 1;
+}
+
+/* ========================================
+   8. TABELAS
+======================================== */
+
+.tabela-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+thead {
+    background: #edf2f7;
+}
+
+th,
+td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--cor-borda);
+    white-space: nowrap;
+}
+
+th {
+    color: #405267;
+    font-size: 13px;
+}
+
+td {
+    font-size: 14px;
+}
+
+tbody tr:hover {
+    background: #f8fafc;
+}
+
+.vazio {
+    padding: 25px;
+    color: var(--cor-texto-secundario);
+    text-align: center;
+}
+
+/* ========================================
+   9. STATUS E MENSAGENS
+======================================== */
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.status.ativo {
+    color: var(--cor-sucesso);
+    background: var(--cor-sucesso-fundo);
+}
+
+.status.devolvido {
+    color: var(--cor-principal);
+    background: #e5eef8;
+}
+
+.status.atrasado {
+    color: var(--cor-erro);
+    background: var(--cor-erro-fundo);
+}
+
+.alerta {
+    margin-bottom: 20px;
+    padding: 13px 16px;
+    border-radius: 8px;
+}
+
+.alerta.success {
+    color: var(--cor-sucesso);
+    background: var(--cor-sucesso-fundo);
+}
+
+.alerta.error {
+    color: var(--cor-erro);
+    background: var(--cor-erro-fundo);
+}
+
+/* ========================================
+   10. RESPONSIVIDADE
+======================================== */
+
+@media (max-width: 1100px) {
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 800px) {
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        padding: 18px;
+    }
+
+    .logo {
+        margin-bottom: 15px;
+    }
+
+    .menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .menu a {
+        padding: 9px 11px;
+    }
+
+    .conteudo {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .formulario {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .painel {
+        padding: 16px;
+    }
+
+    .busca {
+        flex-direction: column;
+    }
+
+    .cabecalho h2 {
+        font-size: 23px;
+    }
+}

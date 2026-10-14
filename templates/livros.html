@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block titulo %}Acervo | Biblioteca{% endblock %}
+{% block cabecalho %}Gerenciamento do Acervo{% endblock %}
+
+{% block conteudo %}
+
+<section class="painel">
+    <h3>Cadastrar livro</h3>
+
+    <form action="{{ url_for('livros.cadastrar_livro') }}"
+          method="POST"
+          class="formulario">
+
+        <div class="campo">
+            <label for="titulo">Título</label>
+            <input type="text" id="titulo" name="titulo"
+                   maxlength="200" required>
+        </div>
+
+        <div class="campo">
+            <label for="autor">Autor</label>
+            <input type="text" id="autor" name="autor"
+                   maxlength="150" required>
+        </div>
+
+        <div class="campo">
+            <label for="isbn">ISBN</label>
+            <input type="text" id="isbn" name="isbn"
+                   maxlength="20">
+        </div>
+
+        <div class="campo">
+            <label for="categoria">Categoria</label>
+            <input type="text" id="categoria" name="categoria"
+                   maxlength="100">
+        </div>
+
+        <div class="campo">
+            <label for="ano_publicacao">Ano de publicação</label>
+            <input type="number" id="ano_publicacao"
+                   name="ano_publicacao" min="1">
+        </div>
+
+        <div class="campo">
+            <label for="quantidade_total">Quantidade total</label>
+            <input type="number" id="quantidade_total"
+                   name="quantidade_total" min="1" value="1" required>
+        </div>
+
+        <button type="submit" class="botao">
+            Cadastrar livro
+        </button>
+    </form>
+</section>
+
+<section class="painel">
+    <h3>Livros cadastrados</h3>
+
+    <form action="{{ url_for('livros.listar_livros') }}"
+          method="GET" class="busca">
+        <input type="search" name="busca"
+               placeholder="Pesquisar por título ou autor"
+               value="{{ request.args.get('busca', '') }}">
+
+        <button type="submit" class="botao">Pesquisar</button>
+    </form>
+
+    <div class="tabela-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>ISBN</th>
+                    <th>Disponíveis</th>
+                    <th>Total</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for livro in livros %}
+                <tr>
+                    <td>{{ livro.titulo }}</td>
+                    <td>{{ livro.autor }}</td>
+                    <td>{{ livro.isbn or '-' }}</td>
+                    <td>{{ livro.quantidade_disponivel }}</td>
+                    <td>{{ livro.quantidade_total }}</td>
+                    <td>
+                        <a class="link-acao"
+                           href="{{ url_for('livros.editar_livro', id=livro.id) }}">
+                            Editar
+                        </a>
+
+                        <form class="form-inline"
+                              action="{{ url_for('livros.excluir_livro', id=livro.id) }}"
+                              method="POST">
+                            <button type="submit"
+                                    class="botao-excluir">
+                                Excluir
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="vazio">
+                        Nenhum livro cadastrado.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}

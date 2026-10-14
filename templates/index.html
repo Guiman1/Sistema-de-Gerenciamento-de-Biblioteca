@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Gerenciamento de Biblioteca</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="topo">
+    <a class="marca" href="#inicio"><span class="logo">B</span><span><strong>Biblioteca</strong><small>Sistema de gerenciamento</small></span></a>
+    <nav aria-label="Navegação principal"><a class="selecionado" href="#inicio">Visão geral</a><a href="#acervo">Acervo</a><a href="#emprestimos">Empréstimos</a><a href="#devolucoes">Devoluções</a></nav>
+  </header>
+
+  <main class="container" id="inicio">
+    <section class="boas-vindas"><div><span class="sobretitulo">PAINEL DA BIBLIOTECA</span><h1>Conhecimento organizado,<br>leitura sempre em movimento.</h1><p>Gerencie os livros, acompanhe empréstimos e registre devoluções em um só lugar.</p><a class="botao botao-claro" href="#acervo">Consultar acervo ↓</a></div><div class="livros-emoji" aria-hidden="true">📚</div></section>
+
+    <section class="indicadores" aria-label="Resumo do acervo">
+      <article class="indicador"><span class="icone verde">▤</span><p>Títulos cadastrados</p><strong>—</strong></article>
+      <article class="indicador"><span class="icone amarelo">↗</span><p>Livros emprestados</p><strong>—</strong></article>
+      <article class="indicador"><span class="icone azul">✓</span><p>Exemplares disponíveis</p><strong>—</strong></article>
+      <article class="indicador"><span class="icone vermelho">!</span><p>Empréstimos atrasados</p><strong>—</strong></article>
+    </section>
+
+    <section class="painel" id="acervo">
+      <div class="cabecalho-secao"><div><h2>Acervo de livros</h2><p>Consulte e filtre os livros cadastrados.</p></div><a class="botao botao-principal" href="#cadastro-livro">＋ Cadastrar livro</a></div>
+      <form class="filtros" action="#acervo" method="get"><input type="search" name="busca" placeholder="Buscar por título ou autor" aria-label="Buscar livro"><select name="genero" aria-label="Filtrar por gênero"><option value="">Todos os gêneros</option><option>Literatura</option><option>Romance</option><option>Ficção</option><option>História</option><option>Tecnologia</option><option>Outros</option></select><select name="disponibilidade" aria-label="Filtrar por disponibilidade"><option value="">Todas as situações</option><option value="disponivel">Disponíveis</option><option value="emprestado">Emprestados</option></select><button class="botao botao-secundario" type="submit">Buscar</button></form>
+      <div class="tabela-responsiva"><table><thead><tr><th>Título</th><th>Autor</th><th>Gênero</th><th>Ano</th><th>Disponíveis / total</th><th>Situação</th></tr></thead><tbody>
+        <!-- Dados de exemplo: substitua pela lista enviada pelo Flask. -->
+        <tr><td><strong>O Pequeno Príncipe</strong></td><td>Antoine de Saint-Exupéry</td><td>Literatura</td><td>1943</td><td>8 / 10</td><td><span class="status disponivel">Disponível</span></td></tr>
+        <tr><td><strong>Dom Casmurro</strong></td><td>Machado de Assis</td><td>Romance</td><td>1899</td><td>3 / 5</td><td><span class="status disponivel">Disponível</span></td></tr>
+        <tr><td><strong>1984</strong></td><td>George Orwell</td><td>Ficção</td><td>1949</td><td>0 / 4</td><td><span class="status emprestado">Emprestado</span></td></tr>
+      </tbody></table></div>
+    </section>
+
+    <div class="duas-colunas">
+      <section class="painel" id="emprestimos"><div class="cabecalho-secao"><div><h2>Registrar empréstimo</h2><p>Associe um livro a um usuário e às datas.</p></div><span class="icone verde">↗</span></div>
+        <form class="formulario" action="#emprestimos" method="post"><label for="livro">Livro</label><select id="livro" name="livro_id" required><option value="">Selecione um livro</option><option>O Pequeno Príncipe</option><option>Dom Casmurro</option><option>1984</option></select><label for="usuario">Usuário</label><input id="usuario" name="usuario" type="text" placeholder="Nome ou matrícula" required><div class="campos-duplos"><div><label for="data-emprestimo">Data do empréstimo</label><input id="data-emprestimo" name="data_emprestimo" type="date" required></div><div><label for="data-prevista">Devolução prevista</label><input id="data-prevista" name="data_devolucao" type="date" required></div></div><button class="botao botao-principal largura-total" type="submit">Registrar empréstimo</button></form>
+      </section>
+      <section class="painel" id="devolucoes"><div class="cabecalho-secao"><div><h2>Registrar devolução</h2><p>Finalize um empréstimo ativo.</p></div><span class="icone azul">↩</span></div>
+        <form class="formulario" action="#devolucoes" method="post"><label for="emprestimo-ativo">Empréstimo / livro</label><select id="emprestimo-ativo" name="emprestimo_id" required><option value="">Selecione um empréstimo</option><option>O Pequeno Príncipe — Maria Silva</option><option>1984 — João Santos</option></select><label for="data-devolucao-real">Data da devolução</label><input id="data-devolucao-real" name="data_real_devolucao" type="date" required><p class="aviso">ⓘ Ao registrar a devolução, o sistema deverá atualizar a disponibilidade do exemplar.</p><button class="botao botao-principal largura-total" type="submit">Confirmar devolução</button></form>
+      </section>
+    </div>
+
+    <section class="painel" id="cadastro-livro"><div class="cabecalho-secao"><div><h2>Cadastrar livro</h2><p>Informe os dados do título para incluí-lo no acervo.</p></div></div>
+      <form class="formulario formulario-livro" action="#cadastro-livro" method="post"><div><label for="titulo">Título</label><input id="titulo" name="titulo" placeholder="Título do livro" required></div><div><label for="autor">Autor</label><input id="autor" name="autor" placeholder="Nome do autor" required></div><div><label for="genero-livro">Gênero / categoria</label><select id="genero-livro" name="genero" required><option value="">Selecione</option><option>Literatura</option><option>Romance</option><option>Ficção</option><option>História</option><option>Tecnologia</option><option>Outros</option></select></div><div><label for="ano">Ano de publicação</label><input id="ano" name="ano" type="number" min="0" max="2100" placeholder="Ex.: 2024" required></div><div><label for="quantidade">Quantidade de exemplares</label><input id="quantidade" name="quantidade" type="number" min="1" placeholder="Ex.: 5" required></div><div class="alinhado-final"><button class="botao botao-principal largura-total" type="submit">Cadastrar livro</button></div></form>
+    </section>
+    <footer class="rodape"><span>Sistema de Gerenciamento de Biblioteca</span><span>Interface inicial · Integração com Flask pendente</span></footer>
+  </main>
+</body>
+</html>

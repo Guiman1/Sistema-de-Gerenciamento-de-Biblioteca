@@ -1,0 +1,105 @@
+
+{% extends "base.html" %}
+
+{% block titulo %}Empréstimos | Biblioteca{% endblock %}
+{% block cabecalho %}Registro de Empréstimos{% endblock %}
+
+{% block conteudo %}
+
+<section class="painel">
+    <h3>Novo empréstimo</h3>
+
+    <form action="{{ url_for('emprestimos.cadastrar_emprestimo') }}"
+          method="POST" class="formulario">
+
+        <div class="campo">
+            <label for="usuario_id">Usuário</label>
+            <select id="usuario_id" name="usuario_id" required>
+                <option value="">Selecione um usuário</option>
+
+                {% for usuario in usuarios %}
+                <option value="{{ usuario.id }}">
+                    {{ usuario.nome }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="livro_id">Livro disponível</label>
+            <select id="livro_id" name="livro_id" required>
+                <option value="">Selecione um livro</option>
+
+                {% for livro in livros %}
+                {% if livro.quantidade_disponivel > 0 %}
+                <option value="{{ livro.id }}">
+                    {{ livro.titulo }} — {{ livro.autor }}
+                    ({{ livro.quantidade_disponivel }} disponíveis)
+                </option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="data_emprestimo">Data do empréstimo</label>
+            <input type="date" id="data_emprestimo"
+                   name="data_emprestimo" required>
+        </div>
+
+        <div class="campo">
+            <label for="data_prevista_devolucao">
+                Previsão de devolução
+            </label>
+            <input type="date" id="data_prevista_devolucao"
+                   name="data_prevista_devolucao" required>
+        </div>
+
+        <button type="submit" class="botao">
+            Registrar empréstimo
+        </button>
+    </form>
+</section>
+
+<section class="painel">
+    <h3>Empréstimos registrados</h3>
+
+    <div class="tabela-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Livro</th>
+                    <th>Usuário</th>
+                    <th>Data do empréstimo</th>
+                    <th>Devolução prevista</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for emprestimo in emprestimos %}
+                <tr>
+                    <td>{{ emprestimo.livro.titulo }}</td>
+                    <td>{{ emprestimo.usuario.nome }}</td>
+                    <td>{{ emprestimo.data_emprestimo }}</td>
+                    <td>{{ emprestimo.data_prevista_devolucao }}</td>
+                    <td>
+                        <span class="status
+                            {{ emprestimo.status }}">
+                            {{ emprestimo.status }}
+                        </span>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="vazio">
+                        Nenhum empréstimo registrado.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}
