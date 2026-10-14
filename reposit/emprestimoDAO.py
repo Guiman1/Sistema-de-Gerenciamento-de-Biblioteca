@@ -15,3 +15,8 @@ class EmprestimoDAO:
     @staticmethod
     def listar_emprestimos():
         return Emprestimo.query.all()
+
+    @staticmethod
+    def atualizar_emprestimo(emprestimo):
+        db.session.add(emprestimo)
+        db.session.commit()
