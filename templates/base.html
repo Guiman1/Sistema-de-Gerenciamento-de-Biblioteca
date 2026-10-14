@@ -8,7 +8,7 @@
     <title>{% block titulo %}Biblioteca{% endblock %}</title>
 
     <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+          href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
@@ -18,12 +18,8 @@
         <nav class="menu">
             <a href="{{ url_for('index') }}">Início</a>
             <a href="{{ url_for('livros.listar_livros') }}">Acervo de livros</a>
-            <a href="{{ url_for('emprestimos.listar_emprestimos') }}">
-                Empréstimos
-            </a>
-            <a href="{{ url_for('devolucoes.listar_devolucoes') }}">
-                Devoluções
-            </a>
+            <a href="{{ url_for('emprestimos.listar_emprestimos') }}">Empréstimos</a>
+            <a href="{{ url_for('devolucoes.listar_devolucoes') }}">Devoluções</a>
         </nav>
     </aside>
 
