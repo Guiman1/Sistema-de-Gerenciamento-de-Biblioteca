@@ -6,9 +6,9 @@ from blueprints.emprestimos import emprestimos_bp
 from blueprints.devolucoes import devolucoes_bp
 
 app = Flask(__name__)
-app.secret_key = 'sua_chave_secreta_aqui'
+app.secret_key = '0600e86f9cb358d7980de6652ac9d8041f0b121f14aa2108'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Guilherme822.@localhost:5432/biblioteca'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/postgres'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)

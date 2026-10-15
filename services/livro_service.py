@@ -1,6 +1,7 @@
 from modelos import livro
 from reposit.livroDAO import LivroDAO
 from modelos.livro import Livro
+from reposit.emprestimoDAO import EmprestimoDAO
 
 class LivroService:
 
@@ -17,10 +18,10 @@ class LivroService:
         livro_existente = LivroDAO.buscar_isbn(livro.isbn)
 
         if livro_existente:
-            return "Já tem uma ISBN cadastrada."
+            return "Essa ISBN já existe."
         else:
             LivroDAO.salvar_livro(livro)
-            return "Este livro foi cadastrado com successo."
+            return "Este livro foi cadastrado com sucesso."
 
     @staticmethod
     def listar_livros():
@@ -37,13 +38,16 @@ class LivroService:
 
     @staticmethod
     def remover_livro(livro_id):
-          livro = LivroDAO.buscar_livro_id(livro_id)
+        livro = LivroDAO.buscar_livro_id(livro_id)
 
-          if livro:
-            LivroDAO.remover_livro(livro)
-            return "Livro removido com sucesso."
-          else:
+        if livro is None:
             return "Esse livro não existe, tente outro."
+
+        if EmprestimoDAO.existe_emprestimo_ativo_do_livro(livro_id):
+            return "Não é possível remover este livro pois ele possui empréstimos em andamento."
+
+        LivroDAO.remover_livro(livro)
+        return "Livro removido com sucesso."
 
     @staticmethod
     def pesquisar_livros(livro_titulo):
