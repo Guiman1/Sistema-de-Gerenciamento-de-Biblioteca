@@ -26,9 +26,8 @@ def listar_livros():
             total_disponivel=quantidade_total,
         )
 
-        db.session.add(novo_livro)
-        db.session.commit()
-        flash('Livro cadastrado com sucesso', 'sucesso')
+        mensagem = LivroService.cadastrar_livro(novo_livro)
+        flash(mensagem, 'sucesso' if 'sucesso' in mensagem.lower() else 'erro')
         return redirect(url_for('livros.listar_livros'))
 
     busca = request.args.get('busca', '')
@@ -42,11 +41,6 @@ def listar_livros():
         livros = Livro.query.all()
 
     return render_template('livros.html', livros=livros)
-
-@livros_bp.route('/livros/editar/<int:id>', methods=['GET', 'POST'])
-def editar_livro(id):
-    flash('Edição ainda não implementada', 'erro')
-    return redirect(url_for('livros.listar_livros'))
 
 @livros_bp.route('/livros/excluir/<int:id>', methods=['POST'])
 def excluir_livro(id):

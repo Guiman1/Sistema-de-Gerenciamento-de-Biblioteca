@@ -17,6 +17,10 @@ class EmprestimoDAO:
         return Emprestimo.query.all()
 
     @staticmethod
+    def existe_emprestimo_ativo_do_livro(livro_id):
+        return Emprestimo.query.filter_by(livro_id=livro_id, status=False).first() is not None
+
+    @staticmethod
     def atualizar_emprestimo(emprestimo):
         db.session.add(emprestimo)
         db.session.commit()

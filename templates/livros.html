@@ -88,11 +88,6 @@
                     <td>{{ livro.total_disponivel }}</td>
                     <td>{{ livro.total_exemplares }}</td>
                     <td>
-                        <a class="link-acao"
-                           href="{{ url_for('livros.editar_livro', id=livro.id) }}">
-                            Editar
-                        </a>
-
                         <form class="form-inline"
                               action="{{ url_for('livros.excluir_livro', id=livro.id) }}"
                               method="POST">

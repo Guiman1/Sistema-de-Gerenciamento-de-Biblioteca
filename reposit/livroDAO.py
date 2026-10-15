@@ -1,5 +1,6 @@
 from configdb import db
 from modelos.livro import Livro
+from modelos.emprestimo import Emprestimo
 
 class LivroDAO:
 
@@ -18,8 +19,13 @@ class LivroDAO:
 
     @staticmethod
     def remover_livro(livro):
-        db.session.delete(livro)
-        db.session.commit()
+        try:
+            Emprestimo.query.filter_by(livro_id=livro.id).delete()
+            db.session.delete(livro)
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
+            raise
 
     @staticmethod
     def atualizar_livro(livro):
