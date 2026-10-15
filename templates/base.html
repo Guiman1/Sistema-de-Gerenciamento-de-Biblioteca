@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block titulo %}Biblioteca{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <h1 class="logo">Biblioteca</h1>
+
+        <nav class="menu">
+            <a href="{{ url_for('index') }}">Início</a>
+            <a href="{{ url_for('livros.listar_livros') }}">Acervo de livros</a>
+            <a href="{{ url_for('emprestimos.listar_emprestimos') }}">Empréstimos</a>
+            <a href="{{ url_for('devolucoes.listar_devolucoes') }}">Devoluções</a>
+        </nav>
+    </aside>
+
+    <main class="conteudo">
+        <header class="cabecalho">
+            <h2>{% block cabecalho %}Sistema de Biblioteca{% endblock %}</h2>
+            <p>Gerenciamento do acervo e circulação de livros</p>
+        </header>
+
+        {% with mensagens = get_flashed_messages(with_categories=true) %}
+            {% for categoria, mensagem in mensagens %}
+                <div class="alerta {{ categoria }}">
+                    {{ mensagem }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        {% block conteudo %}{% endblock %}
+    </main>
+
+</body>
+</html>

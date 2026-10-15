@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block titulo %}Empréstimos | Biblioteca{% endblock %}
+{% block cabecalho %}Registro de Empréstimos{% endblock %}
+
+{% block conteudo %}
+
+<section class="painel">
+    <h3>Novo empréstimo</h3>
+
+    <form action="{{ url_for('emprestimos.listar_emprestimos') }}"
+          method="POST" class="formulario">
+
+        <div class="campo">
+            <label for="livro_id">Livro disponível</label>
+            <select id="livro_id" name="livro_id" required>
+                <option value="">Selecione um livro</option>
+
+                {% for livro in livros %}
+                {% if livro.total_disponivel > 0 %}
+                <option value="{{ livro.id }}">
+                    {{ livro.titulo }} — {{ livro.autor }}
+                    ({{ livro.total_disponivel }} disponíveis)
+                </option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="data_emprestimo">Data do empréstimo</label>
+            <input type="date" id="data_emprestimo"
+                   name="data_emprestimo" required>
+        </div>
+
+        <div class="campo">
+            <label for="data_prevista_devolucao">
+                Previsão de devolução
+            </label>
+            <input type="date" id="data_prevista_devolucao"
+                   name="data_prevista_devolucao" required>
+        </div>
+
+        <button type="submit" class="botao">
+            Registrar empréstimo
+        </button>
+    </form>
+</section>
+
+<section class="painel">
+    <h3>Empréstimos registrados</h3>
+
+    <div class="tabela-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Livro</th>
+                    <th>Data do empréstimo</th>
+                    <th>Devolução prevista</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for emprestimo in emprestimos %}
+                <tr>
+                    <td>{{ emprestimo.livro.titulo }}</td>
+                    <td>{{ emprestimo.data_emprestimo.strftime('%d/%m/%Y') }}</td>
+                    <td>{{ emprestimo.data_prevista_devolucao.strftime('%d/%m/%Y') if emprestimo.data_prevista_devolucao else '-' }}</td>
+                    <td>
+                        <span class="status {{ 'devolvido' if emprestimo.status else 'ativo' }}">
+                            {{ 'Devolvido' if emprestimo.status else 'Ativo' }}
+                        </span>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="vazio">
+                        Nenhum empréstimo registrado.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}
