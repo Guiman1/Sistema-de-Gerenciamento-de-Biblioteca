@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% block titulo %}Devoluções | Biblioteca{% endblock %}
@@ -14,7 +13,6 @@
             <thead>
                 <tr>
                     <th>Livro</th>
-                    <th>Usuário</th>
                     <th>Data do empréstimo</th>
                     <th>Devolução prevista</th>
                     <th>Situação</th>
@@ -26,12 +24,11 @@
                 {% for emprestimo in emprestimos %}
                 <tr>
                     <td>{{ emprestimo.livro.titulo }}</td>
-                    <td>{{ emprestimo.usuario.nome }}</td>
-                    <td>{{ emprestimo.data_emprestimo }}</td>
-                    <td>{{ emprestimo.data_prevista_devolucao }}</td>
+                    <td>{{ emprestimo.data_emprestimo.strftime('%d/%m/%Y') }}</td>
+                    <td>{{ emprestimo.data_prevista_devolucao.strftime('%d/%m/%Y') if emprestimo.data_prevista_devolucao else '-' }}</td>
 
                     <td>
-                        {% if emprestimo.data_prevista_devolucao < hoje %}
+                        {% if emprestimo.data_prevista_devolucao and emprestimo.data_prevista_devolucao.date() < hoje %}
                             <span class="status atrasado">Atrasado</span>
                         {% else %}
                             <span class="status ativo">No prazo</span>
@@ -52,7 +49,7 @@
 
                 {% else %}
                 <tr>
-                    <td colspan="6" class="vazio">
+                    <td colspan="5" class="vazio">
                         Não existem empréstimos aguardando devolução.
                     </td>
                 </tr>
