@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% block titulo %}Empréstimos | Biblioteca{% endblock %}
@@ -9,21 +8,8 @@
 <section class="painel">
     <h3>Novo empréstimo</h3>
 
-    <form action="{{ url_for('emprestimos.cadastrar_emprestimo') }}"
+    <form action="{{ url_for('emprestimos.listar_emprestimos') }}"
           method="POST" class="formulario">
-
-        <div class="campo">
-            <label for="usuario_id">Usuário</label>
-            <select id="usuario_id" name="usuario_id" required>
-                <option value="">Selecione um usuário</option>
-
-                {% for usuario in usuarios %}
-                <option value="{{ usuario.id }}">
-                    {{ usuario.nome }}
-                </option>
-                {% endfor %}
-            </select>
-        </div>
 
         <div class="campo">
             <label for="livro_id">Livro disponível</label>
@@ -31,10 +17,10 @@
                 <option value="">Selecione um livro</option>
 
                 {% for livro in livros %}
-                {% if livro.quantidade_disponivel > 0 %}
+                {% if livro.total_disponivel > 0 %}
                 <option value="{{ livro.id }}">
                     {{ livro.titulo }} — {{ livro.autor }}
-                    ({{ livro.quantidade_disponivel }} disponíveis)
+                    ({{ livro.total_disponivel }} disponíveis)
                 </option>
                 {% endif %}
                 {% endfor %}
@@ -69,7 +55,6 @@
             <thead>
                 <tr>
                     <th>Livro</th>
-                    <th>Usuário</th>
                     <th>Data do empréstimo</th>
                     <th>Devolução prevista</th>
                     <th>Status</th>
@@ -80,19 +65,17 @@
                 {% for emprestimo in emprestimos %}
                 <tr>
                     <td>{{ emprestimo.livro.titulo }}</td>
-                    <td>{{ emprestimo.usuario.nome }}</td>
-                    <td>{{ emprestimo.data_emprestimo }}</td>
-                    <td>{{ emprestimo.data_prevista_devolucao }}</td>
+                    <td>{{ emprestimo.data_emprestimo.strftime('%d/%m/%Y') }}</td>
+                    <td>{{ emprestimo.data_prevista_devolucao.strftime('%d/%m/%Y') if emprestimo.data_prevista_devolucao else '-' }}</td>
                     <td>
-                        <span class="status
-                            {{ emprestimo.status }}">
-                            {{ emprestimo.status }}
+                        <span class="status {{ 'devolvido' if emprestimo.status else 'ativo' }}">
+                            {{ 'Devolvido' if emprestimo.status else 'Ativo' }}
                         </span>
                     </td>
                 </tr>
                 {% else %}
                 <tr>
-                    <td colspan="5" class="vazio">
+                    <td colspan="4" class="vazio">
                         Nenhum empréstimo registrado.
                     </td>
                 </tr>

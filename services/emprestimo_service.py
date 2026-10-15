@@ -42,4 +42,4 @@ class EmprestimoService:
             livro.total_disponivel += 1
             LivroDAO.atualizar_livro(livro)
             EmprestimoDAO.atualizar_emprestimo(emprestimo)
-            return "Livro devolvido!"
+            return "Livro devolvido com sucesso!"

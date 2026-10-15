@@ -17,14 +17,14 @@ def listar_emprestimos():
         novo_emprestimo = Emprestimo(
             livro_id=livro_id,
             data_emprestimo=datetime.strptime(data_emp_str, '%Y-%m-%d') if data_emp_str else datetime.now(),
-            data_devolucao=datetime.strptime(data_prev_str, '%Y-%m-%d') if data_prev_str else None,
+            data_prevista_devolucao=datetime.strptime(data_prev_str, '%Y-%m-%d') if data_prev_str else None,
             status=False
         )
 
         mensagem = EmprestimoService.registrar_emprestimo(novo_emprestimo)
-        flash(mensagem, 'success' if 'sucesso' in mensagem.lower() else 'error')
+        flash(mensagem, 'success' if 'sucesso' in mensagem.lower() else 'erro')
         return redirect(url_for('emprestimos.listar_emprestimos'))
 
     emprestimos = Emprestimo.query.all()
     livros = LivroDAO.listar_livros()
-    return render_template('emprestimos.html', emprestimos=emprestimos, livros=livros, usuarios=[])
+    return render_template('emprestimos.html', emprestimos=emprestimos, livros=livros)
