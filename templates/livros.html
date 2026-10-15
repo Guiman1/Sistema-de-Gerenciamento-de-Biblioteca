@@ -8,7 +8,7 @@
 <section class="painel">
     <h3>Cadastrar livro</h3>
 
-    <form action="{{ url_for('livros.cadastrar_livro') }}"
+    <form action="{{ url_for('livros.listar_livros') }}"
           method="POST"
           class="formulario">
 
@@ -27,7 +27,7 @@
         <div class="campo">
             <label for="isbn">ISBN</label>
             <input type="text" id="isbn" name="isbn"
-                   maxlength="20">
+                   maxlength="13">
         </div>
 
         <div class="campo">
@@ -85,8 +85,8 @@
                     <td>{{ livro.titulo }}</td>
                     <td>{{ livro.autor }}</td>
                     <td>{{ livro.isbn or '-' }}</td>
-                    <td>{{ livro.quantidade_disponivel }}</td>
-                    <td>{{ livro.quantidade_total }}</td>
+                    <td>{{ livro.total_disponivel }}</td>
+                    <td>{{ livro.total_exemplares }}</td>
                     <td>
                         <a class="link-acao"
                            href="{{ url_for('livros.editar_livro', id=livro.id) }}">

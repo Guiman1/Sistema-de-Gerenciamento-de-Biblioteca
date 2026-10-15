@@ -8,7 +8,7 @@ from blueprints.devolucoes import devolucoes_bp
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta_aqui'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:172839@localhost:5432/biblioteca'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Guilherme822.@localhost:5432/biblioteca'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
